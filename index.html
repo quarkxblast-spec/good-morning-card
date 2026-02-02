@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Good Morning 💛</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      background: linear-gradient(to bottom right, #ffdde1, #ee9ca7);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Segoe UI', sans-serif;
+    }
+    .card {
+      background: white;
+      padding: 30px;
+      border-radius: 20px;
+      text-align: center;
+      width: 90%;
+      max-width: 400px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    }
+    img {
+      width: 120px;
+      border-radius: 50%;
+    }
+    .typing {
+      margin-top: 20px;
+      font-size: 20px;
+      color: #333;
+      min-height: 60px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <img src="her.jpg" alt="Good Morning">
+    <div class="typing" id="text"></div>
+  </div>
+
+  <script>
+    const msg = "Good Morning ☀️💛\nHope your day starts with a smile 😊";
+    let i = 0;
+    const speed = 60;
+    function type() {
+      if (i < msg.length) {
+        document.getElementById("text").innerHTML +=
+          msg.charAt(i) === "\n" ? "<br>" : msg.charAt(i);
+        i++;
+        setTimeout(type, speed);
+      }
+    }
+    type();
+  </script>
+
+</body>
+</html>
