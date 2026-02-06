@@ -1,60 +1,194 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Good Morning 💛</title>
-  <style>
-    body {
-      margin: 0;
-      height: 100vh;
-      background: linear-gradient(to bottom right, #ffdde1, #ee9ca7);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-family: 'Segoe UI', sans-serif;
-    }
-    .card {
-      background: white;
-      padding: 30px;
-      border-radius: 20px;
-      text-align: center;
-      width: 90%;
-      max-width: 400px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-    }
-    img {
-      width: 120px;
-      border-radius: 50%;
-    }
-    .typing {
-      margin-top: 20px;
-      font-size: 20px;
-      color: #333;
-      min-height: 60px;
-    }
-  </style>
+<meta charset="UTF-8">
+<title>Rose Day 🌹</title>
+
+<style>
+body{
+  margin:0;
+  height:100vh;
+  background:linear-gradient(#ffe6f0,#fff);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-family:'Segoe UI',sans-serif;
+  overflow:hidden;
+}
+
+#scene{text-align:center}
+
+#bush{
+  font-size:80px;
+  cursor:pointer;
+}
+
+.rose{
+  position:absolute;
+  font-size:40px;
+  animation:pop .4s ease;
+}
+@keyframes pop{
+  from{transform:scale(0)}
+  to{transform:scale(1)}
+}
+
+/* Teddy beat sync */
+#teddy{
+  display:none;
+  font-size:90px;
+  animation:beat 0.8s infinite;
+  cursor:pointer;
+}
+@keyframes beat{
+  0%,100%{transform:scale(1)}
+  50%{transform:scale(1.15)}
+}
+
+/* Card */
+#card{
+  display:none;
+  background:white;
+  padding:20px;
+  border-radius:20px;
+  width:85%;
+  max-width:360px;
+  box-shadow:0 10px 25px rgba(0,0,0,.2);
+}
+
+/* Name animation */
+#name{
+  font-size:28px;
+  font-weight:bold;
+  color:#e60073;
+  margin-bottom:10px;
+  text-shadow:0 0 10px pink;
+  min-height:36px;
+}
+
+/* Heart photo */
+.heart{
+  width:140px;
+  height:140px;
+  background:red;
+  position:relative;
+  transform:rotate(-45deg);
+  margin:15px auto;
+}
+.heart:before,.heart:after{
+  content:'';
+  width:140px;
+  height:140px;
+  background:red;
+  border-radius:50%;
+  position:absolute;
+}
+.heart:before{top:-70px; left:0}
+.heart:after{left:70px; top:0}
+
+.heart img{
+  position:absolute;
+  width:120px;
+  height:120px;
+  border-radius:50%;
+  top:10px;
+  left:10px;
+  transform:rotate(45deg);
+}
+
+/* Floating hearts */
+.floating{
+  position:absolute;
+  color:red;
+  animation:float 4s linear;
+}
+@keyframes float{
+  from{bottom:0; opacity:1}
+  to{bottom:100%; opacity:0}
+}
+</style>
 </head>
+
 <body>
 
-  <div class="card">
-    <img src="her.jpg" alt="Good Morning">
-    <div class="typing" id="text"></div>
-  </div>
+<audio id="song" autoplay loop>
+  <source src="arz.mp3" type="audio/mpeg">
+</audio>
 
-  <script>
-    const msg = "Good Morning ☀️💛\nHope your day starts with a smile 😊";
-    let i = 0;
-    const speed = 60;
-    function type() {
-      if (i < msg.length) {
-        document.getElementById("text").innerHTML +=
-          msg.charAt(i) === "\n" ? "<br>" : msg.charAt(i);
-        i++;
-        setTimeout(type, speed);
-      }
-    }
-    type();
-  </script>
+<div id="scene">
+  <div id="bush">🌹</div>
+  <div id="teddy">🧸💐<br><small>Tap me</small></div>
+
+  <div id="card">
+    <div id="name"></div>
+
+    <div class="heart">
+      <img src="her.jpg">
+    </div>
+
+    <p style="font-size:17px">
+      Like red roses, your beauty is timeless.<br>
+      Like pink, it’s gentle and warm.<br>
+      Like orange, it fills life with joy.<br><br>
+      On this Rose Day 🌹<br>
+      every color blooms because of you.
+    </p>
+
+    <p><b>— From yours truly, Akashdeep 💛</b></p>
+  </div>
+</div>
+
+<script>
+let count=0;
+const colors=["🌹","🌸","🌺"];
+const bush=document.getElementById("bush");
+const teddy=document.getElementById("teddy");
+const card=document.getElementById("card");
+const nameDiv=document.getElementById("name");
+
+/* Rose bloom */
+bush.onclick=()=>{
+  if(count<10){
+    const r=document.createElement("div");
+    r.className="rose";
+    r.innerText=colors[Math.floor(Math.random()*3)];
+    r.style.left=Math.random()*90+"%";
+    r.style.top=Math.random()*70+"%";
+    document.body.appendChild(r);
+    count++;
+  }
+  if(count===10){
+    bush.style.display="none";
+    teddy.style.display="block";
+  }
+};
+
+/* Teddy click → card */
+teddy.onclick=()=>{
+  teddy.style.display="none";
+  card.style.display="block";
+  typeName("Ayantika");
+
+  setInterval(()=>{
+    const h=document.createElement("div");
+    h.className="floating";
+    h.innerText="💖";
+    h.style.left=Math.random()*100+"%";
+    document.body.appendChild(h);
+    setTimeout(()=>h.remove(),4000);
+  },350);
+};
+
+/* Name typing animation */
+function typeName(text){
+  let i=0;
+  const interval=setInterval(()=>{
+    nameDiv.innerHTML+=text.charAt(i);
+    i++;
+    if(i===text.length) clearInterval(interval);
+  },150);
+}
+</script>
 
 </body>
 </html>
