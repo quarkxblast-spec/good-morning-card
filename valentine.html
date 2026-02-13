@@ -1,156 +1,144 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
 <title>Will You Be My Valentine?</title>
 
 <style>
-body {
-  margin: 0;
-  font-family: 'Segoe UI', sans-serif;
-  background: linear-gradient(135deg, #ff758c, #ff7eb3);
-  overflow: hidden;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  text-align: center;
+body{
+  margin:0;
+  font-family:Arial, sans-serif;
+  overflow:hidden;
+  background:linear-gradient(135deg,#ff6a88,#ff99ac);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+  text-align:center;
+  color:white;
 }
 
-.container {
-  color: white;
+/* SCREEN */
+.screen{
+  position:absolute;
+  width:100%;
+  height:100%;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  transition:opacity 0.6s ease;
 }
 
-h1 {
-  font-size: 2.2rem;
-  margin-bottom: 40px;
+.hidden{
+  opacity:0;
+  pointer-events:none;
 }
 
-button {
-  padding: 12px 28px;
-  font-size: 18px;
-  border: none;
-  border-radius: 30px;
-  cursor: pointer;
-  transition: 0.3s;
-  margin: 10px;
+/* BUTTONS */
+button{
+  padding:12px 28px;
+  font-size:18px;
+  border:none;
+  border-radius:30px;
+  cursor:pointer;
+  margin:10px;
 }
 
-#yesBtn {
-  background: white;
-  color: #ff4d6d;
+#yes{
+  background:white;
+  color:#ff4d6d;
 }
 
-#noBtn {
-  background: #ff4d6d;
-  color: white;
-  position: absolute;
+#no{
+  background:#ff4d6d;
+  color:white;
+  position:absolute;
 }
 
-.hidden {
-  display: none;
+/* HEART FLOAT */
+.heart{
+  position:fixed;
+  bottom:-20px;
+  font-size:20px;
+  animation:float 4s linear forwards;
 }
 
-/* Floating hearts */
-.heart {
-  position: fixed;
-  bottom: -20px;
-  font-size: 20px;
-  animation: floatUp 5s linear infinite;
-  opacity: 0.8;
-}
-
-@keyframes floatUp {
-  to {
-    transform: translateY(-110vh);
-    opacity: 0;
+@keyframes float{
+  to{
+    transform:translateY(-110vh);
+    opacity:0;
   }
 }
 
-/* Slideshow */
-#slideshow {
-  position: fixed;
-  inset: 0;
-  background: black;
-  display: none;
-  justify-content: center;
-  align-items: center;
-  color: white;
-  font-size: 30px;
-  flex-direction: column;
+/* SLIDES */
+.slide{
+  font-size:28px;
+  display:none;
 }
 
-.slide {
-  display: none;
+.slide.active{
+  display:block;
 }
 
-.slide.active {
-  display: block;
+/* LETTER */
+#letterBox{
+  background:white;
+  color:#333;
+  padding:25px;
+  border-radius:15px;
+  width:85%;
+  max-width:400px;
+  animation:pop 0.5s ease;
 }
 
-/* Letter Popup */
-#letter {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.85);
-  display: none;
-  justify-content: center;
-  align-items: center;
-}
-
-.letter-box {
-  background: white;
-  color: #333;
-  padding: 30px;
-  border-radius: 15px;
-  width: 85%;
-  max-width: 400px;
-  animation: pop 0.5s ease;
-}
-
-@keyframes pop {
-  from { transform: scale(0); }
-  to { transform: scale(1); }
+@keyframes pop{
+  from{transform:scale(0);}
+  to{transform:scale(1);}
 }
 </style>
 </head>
 
 <body>
 
-<div class="container" id="main">
-  <h1>Will you be my Valentine, Ayantika? 💘</h1>
-  <button id="yesBtn">Yes ❤️</button>
-  <button id="noBtn">No</button>
+<!-- QUESTION SCREEN -->
+<div id="question" class="screen">
+  <h1>Will you be my Valentine, Ayantika?</h1>
+  <button id="yes">Yes ❤️</button>
+  <button id="no">No</button>
 </div>
 
-<div id="slideshow">
+<!-- SLIDESHOW SCREEN -->
+<div id="slides" class="screen hidden">
   <div class="slide active">You are my calm in chaos ❤️</div>
-  <div class="slide">My favorite person 🌹</div>
-  <div class="slide">My always and forever 💞</div>
-  <p style="margin-top:40px;font-size:18px;">(Click anywhere)</p>
+  <div class="slide">My comfort in every low 🌹</div>
+  <div class="slide">My favorite person always 💞</div>
+  <p style="margin-top:40px;font-size:16px;">(Tap anywhere)</p>
 </div>
 
-<div id="letter">
-  <div class="letter-box">
+<!-- LETTER SCREEN -->
+<div id="letter" class="screen hidden">
+  <div id="letterBox">
     <h2>For You, Ayantika ❤️</h2>
     <p>
-      I love you, Ayantika. <br><br>
+      I love you, Ayantika.<br><br>
       Thank you for always choosing me —
-      in the lows and in the highs.  
-      For staying when things weren’t easy.  
-      For being my comfort, my calm, and my chaos.  
-      <br><br>
-      I don’t just want today —  
+      in the lows and in the highs.
+      For staying when things weren’t easy.
+      For being my comfort, my calm,
+      and my chaos.<br><br>
+      I don’t just want today —
       I want every tomorrow with you.
     </p>
   </div>
 </div>
 
 <script>
-const noBtn = document.getElementById("noBtn");
-const yesBtn = document.getElementById("yesBtn");
-const main = document.getElementById("main");
-const slideshow = document.getElementById("slideshow");
+const yesBtn = document.getElementById("yes");
+const noBtn = document.getElementById("no");
+
+const question = document.getElementById("question");
+const slides = document.getElementById("slides");
 const letter = document.getElementById("letter");
 
 const noTexts = [
@@ -158,55 +146,60 @@ const noTexts = [
   "Think again 😌",
   "Pretty please?",
   "Last chance!",
-  "Are you really sure?",
+  "Really sure?",
   "Come onnnn"
 ];
 
 let noIndex = 0;
 
-noBtn.addEventListener("mouseover", () => {
-  noBtn.style.top = Math.random() * (window.innerHeight - 50) + "px";
-  noBtn.style.left = Math.random() * (window.innerWidth - 100) + "px";
+/* MOBILE WORKING NO BUTTON */
+noBtn.addEventListener("click", function(e){
+  e.preventDefault();
+  noBtn.style.top = Math.random() * (window.innerHeight - 60) + "px";
+  noBtn.style.left = Math.random() * (window.innerWidth - 120) + "px";
   noBtn.innerText = noTexts[noIndex % noTexts.length];
   noIndex++;
 });
 
-yesBtn.addEventListener("click", () => {
-  main.style.display = "none";
-  slideshow.style.display = "flex";
+/* YES CLICK */
+yesBtn.addEventListener("click", function(){
+  question.classList.add("hidden");
+  slides.classList.remove("hidden");
   startHearts();
-  startSlides();
+  startSlideShow();
 });
 
-function startHearts() {
-  setInterval(() => {
+/* HEART ANIMATION */
+function startHearts(){
+  setInterval(function(){
     const heart = document.createElement("div");
     heart.classList.add("heart");
     heart.innerHTML = "❤";
     heart.style.left = Math.random() * 100 + "vw";
-    heart.style.fontSize = (15 + Math.random() * 20) + "px";
+    heart.style.fontSize = (15 + Math.random()*20) + "px";
     document.body.appendChild(heart);
-
-    setTimeout(() => heart.remove(), 5000);
-  }, 300);
+    setTimeout(()=>heart.remove(),4000);
+  },300);
 }
 
-let currentSlide = 0;
-const slides = document.querySelectorAll(".slide");
+/* SLIDESHOW */
+let current = 0;
+const slideItems = document.querySelectorAll(".slide");
 
-function startSlides() {
-  setInterval(() => {
-    slides[currentSlide].classList.remove("active");
-    currentSlide = (currentSlide + 1) % slides.length;
-    slides[currentSlide].classList.add("active");
-  }, 2000);
+function startSlideShow(){
+  setInterval(function(){
+    slideItems[current].classList.remove("active");
+    current = (current + 1) % slideItems.length;
+    slideItems[current].classList.add("active");
+  },2000);
 }
 
-slideshow.addEventListener("click", () => {
-  slideshow.style.display = "none";
-  letter.style.display = "flex";
+/* TAP TO LETTER */
+slides.addEventListener("click", function(){
+  slides.classList.add("hidden");
+  letter.classList.remove("hidden");
 });
 </script>
 
 </body>
-  </html>
+</html>
